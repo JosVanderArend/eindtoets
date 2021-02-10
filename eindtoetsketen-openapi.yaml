@@ -1,11 +1,11 @@
-﻿openapi: 3.0.1
+openapi: 3.0.1
 info:
   title: Eindtoetsketen
   description: Dit is de definitie van de diensten in de Eindtoetsketen.
   contact:
     name: Jos van der Arend (Kennisnet)
     email: J.vanderArend@kennisnet.nl
-  version: '20201022'
+  version: '20210210'
 servers:
 - url: https://eindtoets.edustandaard.nl/v2020-2021
 tags:
@@ -666,7 +666,7 @@ components:
       required:
       - afnamecontext
       - id
-      - onderwijsdeelnemer
+      - deelnemerref
       - resultaten
       - toetsdefinitie
       - versie
