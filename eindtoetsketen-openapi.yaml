@@ -5,7 +5,7 @@ info:
   contact:
     name: Jos van der Arend (Kennisnet)
     email: J.vanderArend@kennisnet.nl
-  version: '20210210'
+  version: '20210225'
 servers:
 - url: https://eindtoets.edustandaard.nl/v2020-2021
 tags:
@@ -121,7 +121,7 @@ paths:
           type: string
           pattern: "(\\d|\\D){20}"
       requestBody:
-        description: Leerlingresultaat met score- en resultaatgegevens van een leerling
+        description: Leerlingresultaat met score- en resultaatgegevens van een leerling 
           op de eindtoets.
         content:
           application/json:
@@ -136,8 +136,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ontvangstmelding'
         "401":
-          description: Verzender van bericht is niet geautoriseerd door de betreffende
+          description: Verzender van bericht is niet geautoriseerd door de betreffende 
             school.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ontvangstmelding'
+        "405":
+          description: School is niet bekend bij ontvanger.
           content:
             application/json:
               schema:
@@ -398,7 +404,7 @@ components:
         datumtijd:
           type: string
           format: date-time
-          example: 2020-06-16T14:44:00Z
+          example: "2020-06-16T14:44:00Z"
         auteur:
           type: string
           example: Applicatie xyz
