@@ -1,13 +1,14 @@
+---
 openapi: 3.0.1
 info:
   title: Eindtoetsketen
-  description: Dit is de definitie van de diensten in de Eindtoetsketen.
+  description: Dit is de definitie van de diensten in de Eindtoetsketen voor schooljaar 2021-2022.
   contact:
     name: Jos van der Arend (Kennisnet)
     email: J.vanderArend@kennisnet.nl
-  version: '20210225'
+  version: "20210706"
 servers:
-- url: https://eindtoets.edustandaard.nl/v2020-2021
+- url: https://eindtoets.edustandaard.nl/v2021-2022
 tags:
 - name: Eindtoetsdeelnemers
   description: Dienst over de uitwisseling van de eindtoetsdeelnemers
@@ -19,40 +20,110 @@ paths:
       tags:
       - Eindtoetsdeelnemers
       summary: Registreren eindtoetsdeelnemers
-      description: Registreren van alle deelnemers aan de eindtoets volgens standlevering
-        van de deelnemerslijst aan de toetsleverancier. Iedere laatste aanlevering
-        van de school is de meest actuele en volledige verzameling van deelnemergegevens.
-        Deze registratie kan nieuw zijn (eerste aanlevering) of een update (alle vervolgleveringen).
-        Het gedeelte '/toetsleverancier-endpoint' uit het pad moet worden vervangen
-        door het endpoint van de betreffende toetsleverancier.
+      description: Registreren van alle deelnemers aan de eindtoets volgens standlevering van de deelnemerslijst aan de toetsleverancier. Iedere laatste aanlevering van de school is de meest actuele en volledige verzameling van deelnemergegevens. Deze registratie kan nieuw zijn (eerste aanlevering) of een update (alle vervolgleveringen). Het gedeelte '/toetsleverancier-endpoint' uit het pad moet worden vervangen door het endpoint van de betreffende toetsleverancier.
       operationId: registrerenEindtoetsdeelnemers
       parameters:
       - name: edu-to
         in: query
-        description: Dit geeft aan namens welke school de toetsleverancier het bericht ontvangt. De waarde is het 20 karakters lange School OIN (omdat het routeringskenmerk voor de toetsleverancier in het OSR vooralsnog niet bestaat). Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel.  
-        example: "0000000700011BB00000"
+        description: Dit geeft aan namens welke school de toetsleverancier het bericht ontvangt. De waarde is het 20 karakters lange School OIN (omdat het routeringskenmerk voor de toetsleverancier in het OSR vooralsnog niet bestaat). Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel.
         required: true
         style: form
         explode: false
         schema:
+          pattern: (\d|\D){20}
           type: string
-          pattern: "(\\d|\\D){20}"
+        example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: Dit geeft aan namens welke school de LAS-leverancier het bericht verzendt. De waarde is het 20 karakters lange routeringskenmerk van de betreffende schooladministratie. Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel. Let op, de waarde van deze parameter wordt door de ontvangende toetsleverancier opgeslagen om te worden gebruikt bij de aanlevering van de eindtoetsresultaten.  
-        example: "0000000700011BB00530"
+        description: Dit geeft aan namens welke school de LAS-leverancier het bericht verzendt. De waarde is het 20 karakters lange routeringskenmerk van de betreffende schooladministratie. Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel. Let op, de waarde van deze parameter wordt door de ontvangende toetsleverancier opgeslagen om te worden gebruikt bij de aanlevering van de eindtoetsresultaten.
         required: true
         style: form
         explode: false
         schema:
+          pattern: (\d|\D){20}
           type: string
-          pattern: "(\\d|\\D){20}"
+        example: 0000000700011BB00530
       requestBody:
         description: Deelnemerslijst
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Deelnemerslijst'
+            examples:
+              example-BRIN6:
+                value:
+                  datumtijd: 2020-06-16T14:44:00Z
+                  auteur: Applicatie xyz
+                  versie: Eindtoetsketen_v2021-2022
+                  profiel: Eindtoetsdeelnemers
+                  schooljaar: 2021-2022
+                  aanbieder:
+                    label: BRIN4
+                    onderwijsaanbiederID: 99XX
+                  locatie:
+                    label: BRIN6
+                    onderwijslocatieID: "01"
+                  groepen:
+                  - label: Stamgroep
+                    id: groep-abc123
+                    omschrijving: 8A
+                    niveau:
+                      label: Jaargroep
+                      niveau: "8"
+                  deelnemers:
+                  - label: Leerling
+                    deelnemerref:
+                    - label: ECK-iD
+                      onderwijsdeelnemerID: leerling-abc123
+                    achternaam: Achternaam
+                    voorvoegsel: van der
+                    roepnaam: Aatje
+                    groep: groep-abc123
+                    niveau:
+                      label: Jaargroep
+                      niveau: "8"
+                    extensie:
+                      label: Demografisch
+                      voorletters: ABC
+                      geboortedatum: 2008-05-12
+                      geslacht: 1
+              example-ULOC:
+                value:
+                  datumtijd: 2020-06-16T14:44:00Z
+                  auteur: Applicatie xyz
+                  versie: Eindtoetsketen_v2021-2022
+                  profiel: Eindtoetsdeelnemers
+                  schooljaar: 2021-2022
+                  aanbieder:
+                    label: BRIN4
+                    onderwijsaanbiederID: 99XX
+                  locatie:
+                    label: ULOC
+                    onderwijslocatieID: 100X000
+                  groepen:
+                  - label: Stamgroep
+                    id: groep-abc123
+                    omschrijving: 8A
+                    niveau:
+                      label: Jaargroep
+                      niveau: "8"
+                  deelnemers:
+                  - label: Leerling
+                    deelnemerref:
+                    - label: ECK-iD
+                      onderwijsdeelnemerID: leerling-abc123
+                    achternaam: Achternaam
+                    voorvoegsel: van der
+                    roepnaam: Aatje
+                    groep: groep-abc123
+                    niveau:
+                      label: Jaargroep
+                      niveau: "8"
+                    extensie:
+                      label: Demografisch
+                      voorletters: ABC
+                      geboortedatum: 2008-05-12
+                      geslacht: 1
         required: true
       responses:
         "202":
@@ -62,8 +133,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ontvangstmelding'
         "401":
-          description: Verzender van bericht is niet geautoriseerd door de betreffende
-            school.
+          description: Verzender van bericht is niet geautoriseerd door de betreffende school.
           content:
             application/json:
               schema:
@@ -92,37 +162,31 @@ paths:
       tags:
       - Eindtoetsresultaten
       summary: Overdragen leerlingresultaat
-      description: Aanlevering van score- en resultaatgegevens van een leerling op
-        de eindtoets volgens standlevering, d.w.z. iedere laatste aanlevering van
-        de leerling is de meest actuele en volledige verzameling leerlingresultaatgegevens,
-        exclusief het leerlingrapport. Deze overdracht kan nieuw zijn (eerste aanlevering)
-        of een update (alle vervolgleveringen). Het gedeelte '/las-leverancier-endpoint'
-        uit het pad moet worden vervangen door het endpoint van de betreffende LAS-leverancier.
+      description: Aanlevering van score- en resultaatgegevens van een leerling op de eindtoets volgens standlevering, d.w.z. iedere laatste aanlevering van de leerling is de meest actuele en volledige verzameling leerlingresultaatgegevens, exclusief het leerlingrapport. Deze overdracht kan nieuw zijn (eerste aanlevering) of een update (alle vervolgleveringen). Het gedeelte '/las-leverancier-endpoint' uit het pad moet worden vervangen door het endpoint van de betreffende LAS-leverancier.
       operationId: overdragenLeerlingresultaat
       parameters:
       - name: edu-to
         in: query
-        description: Dit geeft aan namens welke school de LAS-leverancier het bericht ontvangt. De waarde is het 20 karakters lange routeringskenmerk van de betreffende schooladministratie. Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel. Let op, de waarde komt uit de “edu-from” query parameter zoals meegezonden in de aanlevering van eindtoetsdeelnemers.  
-        example: "0000000700011BB00530"
+        description: Dit geeft aan namens welke school de LAS-leverancier het bericht ontvangt. De waarde is het 20 karakters lange routeringskenmerk van de betreffende schooladministratie. Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel. Let op, de waarde komt uit de “edu-from” query parameter zoals meegezonden in de aanlevering van eindtoetsdeelnemers.
         required: true
         style: form
         explode: false
         schema:
+          pattern: (\d|\D){20}
           type: string
-          pattern: "(\\d|\\D){20}"
+        example: 0000000700011BB00530
       - name: edu-from
         in: query
         description: Dit geeft aan namens welke school de toetsleverancier het bericht verzendt. De waarde is het 20 karakters lange School OIN (omdat het routeringskenmerk voor de toetsleverancier in het OSR vooralsnog niet bestaat). Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel.
-        example: "0000000700011BB00000"
         required: true
         style: form
         explode: false
         schema:
+          pattern: (\d|\D){20}
           type: string
-          pattern: "(\\d|\\D){20}"
+        example: 0000000700011BB00000
       requestBody:
-        description: Leerlingresultaat met score- en resultaatgegevens van een leerling 
-          op de eindtoets.
+        description: Leerlingresultaat met score- en resultaatgegevens van een leerling op de eindtoets.
         content:
           application/json:
             schema:
@@ -136,8 +200,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ontvangstmelding'
         "401":
-          description: Verzender van bericht is niet geautoriseerd door de betreffende 
-            school.
+          description: Verzender van bericht is niet geautoriseerd door de betreffende school.
           content:
             application/json:
               schema:
@@ -160,40 +223,38 @@ paths:
       tags:
       - Eindtoetsresultaten
       summary: Opvragen leerlingrapport
-      description: Opvragen van het leerlingrapport van een specifieke leerling als
-        resultaat op de eindtoets. Het gedeelte '/toetsleverancier-endpoint' uit het
-        pad moet worden vervangen door het endpoint van de betreffende toetsleverancier.
+      description: Opvragen van het leerlingrapport van een specifieke leerling als resultaat op de eindtoets. Het gedeelte '/toetsleverancier-endpoint' uit het pad moet worden vervangen door het endpoint van de betreffende toetsleverancier.
       operationId: verkrijgenLeerlingrapport
       parameters:
       - name: rapportid
         in: path
         description: Het id van het leerlingrapport
-        example: "fceea73b-4aab-48fc-9f92-52f8b9230ca8"
         required: true
         style: simple
         explode: false
         schema:
           type: string
+        example: fceea73b-4aab-48fc-9f92-52f8b9230ca8
       - name: edu-to
         in: query
-        description: Dit geeft aan namens welke school de toetsleverancier het bericht ontvangt. De waarde is het 20 karakters lange School OIN (omdat het routeringskenmerk voor de toetsleverancier in het OSR vooralsnog niet bestaat). Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel.  
-        example: "0000000700011BB00000"
+        description: Dit geeft aan namens welke school de toetsleverancier het bericht ontvangt. De waarde is het 20 karakters lange School OIN (omdat het routeringskenmerk voor de toetsleverancier in het OSR vooralsnog niet bestaat). Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel.
         required: true
         style: form
         explode: false
         schema:
+          pattern: (\d|\D){20}
           type: string
-          pattern: "(\\d|\\D){20}"
+        example: 0000000700011BB00000
       - name: edu-from
         in: query
         description: Dit geeft aan namens welke school de LAS-leverancier het bericht verzendt. De waarde is het 20 karakters lange routeringskenmerk van de betreffende schooladministratie. Deze parameter is verplicht volgens de Edukoppeling REST/SaaS-profiel.
-        example: "0000000700011BB00530"
         required: true
         style: form
         explode: false
         schema:
+          pattern: (\d|\D){20}
           type: string
-          pattern: "(\\d|\\D){20}"
+        example: 0000000700011BB00530
       responses:
         "200":
           description: Operatie succesvol, leerlingrapport in PDF-formaat.
@@ -230,9 +291,10 @@ components:
       properties:
         label:
           type: string
-          example: Leerling
           description: Het type Onderwijsdeelnemer
-          enum: [Leerling]
+          example: Leerling
+          enum:
+          - Leerling
         deelnemerref:
           type: array
           items:
@@ -261,12 +323,14 @@ components:
       properties:
         label:
           type: string
-          example: ECK-iD
-          description: >
+          description: |
             De type ID van de leerling in de keten:
               * ECK-iD - ID van de ECK Leermiddelenketen
               * LAS-key - ID geintroduceerd in de keten door het LAS
-          enum: [ECK-iD, LAS-key]
+          example: ECK-iD
+          enum:
+          - ECK-iD
+          - LAS-key
         onderwijsdeelnemerID:
           type: string
           example: leerling-abc123
@@ -278,17 +342,20 @@ components:
       properties:
         label:
           type: string
-          example: Jaargroep
           description: Het type Niveau van de leerling
-          enum: [Jaargroep]
+          example: Jaargroep
+          enum:
+          - Jaargroep
         niveau:
           type: string
-          example: "8"
-          description: >
+          description: |
             Het jaargroep-niveau van de leerling:
               * 7 - PO Jaargroep 7 en/of Leerjaar 7 van de leerling
               * 8 - PO Jaargroep 8 en/of Leerjaar 8 van de leerling
-          enum: [ "7", "8"]
+          example: "8"
+          enum:
+          - "7"
+          - "8"
     Demografisch:
       required:
       - geboortedatum
@@ -299,25 +366,28 @@ components:
       properties:
         label:
           type: string
-          example: Demografisch
           description: Het type Extensie gegevensblok
-          enum: [Demografisch]
+          example: Demografisch
+          enum:
+          - Demografisch
         voorletters:
           type: string
           example: ABC
         geboortedatum:
           type: string
           format: date
-          example: 2008-05-12
         geslacht:
           type: integer
-          example: 1
-          description: >
+          description: |
             Het geslacht van de leerling:
               * `1` - Mannelijk
               * `2` - Vrouwelijk
               * `9` - Niet gespecificeerd
-          enum: [1, 2, 9]
+          example: 1
+          enum:
+          - 1
+          - 2
+          - 9
     Groep:
       required:
       - id
@@ -328,15 +398,16 @@ components:
       properties:
         label:
           type: string
-          example: Stamgroep
           description: Het type Groep
-          enum: [Stamgroep]
+          example: Stamgroep
+          enum:
+          - Stamgroep
         id:
           type: string
           example: groep-abc123
         omschrijving:
           type: string
-          example: "8A"
+          example: 8A
         niveau:
           $ref: '#/components/schemas/Groepsniveau'
     Groepsniveau:
@@ -347,19 +418,24 @@ components:
       properties:
         label:
           type: string
-          example: Jaargroep
           description: Het type Niveau van de groep
-          enum: [Jaargroep]
+          example: Jaargroep
+          enum:
+          - Jaargroep
         niveau:
           type: string
-          example: "8"
-          description: >
+          description: |
             Het jaargroep-niveau van de groep:
               * "7" - Groep met Jaargroep 7 en/of Leerjaar 7 leerlingen
               * "8" - Groep met Jaargroep 8 en/of Leerjaar 8 leerlingen
               * "C" - Combinatiegroep
               * "S" - SO
-          enum: ["7","8","C","S"]
+          example: "8"
+          enum:
+          - "7"
+          - "8"
+          - C
+          - S
     OnderwijsaanbiederRef:
       required:
       - label
@@ -368,9 +444,10 @@ components:
       properties:
         label:
           type: string
-          example: BRIN4
           description: Het type OnderwijsaanbiederRef
-          enum: [BRIN4]
+          example: BRIN4
+          enum:
+          - BRIN4
         onderwijsaanbiederID:
           type: string
           example: 99XX
@@ -382,9 +459,11 @@ components:
       properties:
         label:
           type: string
-          example: BRIN6
           description: Het type OnderwijslocatieRef
-          enum: [BRIN6, ULOC]
+          example: BRIN6
+          enum:
+          - BRIN6
+          - ULOC
         onderwijslocatieID:
           type: string
           example: "01"
@@ -404,21 +483,22 @@ components:
         datumtijd:
           type: string
           format: date-time
-          example: "2020-06-16T14:44:00Z"
+          example: 2020-06-16T14:44:00Z
         auteur:
           type: string
           example: Applicatie xyz
         versie:
           type: string
-          example: Eindtoetsketen_v2020-2021
+          example: Eindtoetsketen_v2021-2022
         profiel:
           type: string
-          example: Eindtoetsdeelnemers
           description: Het profiel van deze gegevensset
-          enum: [Eindtoetsdeelnemers]
+          example: Eindtoetsdeelnemers
+          enum:
+          - Eindtoetsdeelnemers
         schooljaar:
           type: string
-          example: 2020-2021
+          example: 2021-2022
         aanbieder:
           $ref: '#/components/schemas/OnderwijsaanbiederRef'
         locatie:
@@ -441,27 +521,32 @@ components:
       properties:
         label:
           type: string
-          example: Eindtoets
           description: Het type Toets
-          enum: [Eindtoets]
+          example: Eindtoets
+          enum:
+          - Eindtoets
         id:
           type: string
-          example: "0011"
-          description: >
+          description: |
             Het soort eindtoets:
               * "0011" - CET
               * "0012" - Route 8
               * "0013" - IEP
               * "0014" - Dia-eindtoets
               * "0016" - AMN Eindtoets
-          enum: ["0011", "0012", "0013", "0014", "0016"]
+          example: "0011"
+          enum:
+          - "0011"
+          - "0012"
+          - "0013"
+          - "0014"
+          - "0016"
         naam:
           type: string
           example: CET
         versie:
           type: string
-          example: "01"
-          description: >
+          description: |
             De versie van de eindtoets:
               * "01" - CET papier zonder wereldoriëntatie
               * "02" - CET papier met wereldoriëntatie
@@ -472,7 +557,17 @@ components:
               * "21" - IEP papier
               * "31" - Dia-eindtoets digitaal
               * "51" - AMN Eindtoets digitaal
-          enum: ["01","02","03","04", "11","12", "21", "31", "51"]
+          example: "01"
+          enum:
+          - "01"
+          - "02"
+          - "03"
+          - "04"
+          - "11"
+          - "12"
+          - "21"
+          - "31"
+          - "51"
         url:
           type: string
           example: https://www.eindtoetsxyz.nl
@@ -491,19 +586,24 @@ components:
       properties:
         label:
           type: string
-          example: Onderdeel
           description: Het type Toetsonderdeel
-          enum: [Onderdeel]
+          example: Onderdeel
+          enum:
+          - Onderdeel
         id:
           type: string
-          example: "8000"
-          description: >
+          description: |
             Het soort onderdeel:
               * "8000" - Nederlandse taal
               * "8001" - Rekenen
               * "8002" - Wereldoriëntatie
               * "8003" - Functioneren
-          enum: ["8000", "8001", "8002", "8003"]
+          example: "8000"
+          enum:
+          - "8000"
+          - "8001"
+          - "8002"
+          - "8003"
         omschrijving:
           type: string
           example: Nederlandse taal
@@ -519,13 +619,13 @@ components:
       properties:
         label:
           type: string
-          example: Domein
           description: Het type Toetsonderdeel
-          enum: [Domein]
+          example: Domein
+          enum:
+          - Domein
         id:
           type: string
-          example: "8050"
-          description: >
+          description: |
             Het soort domein:
               * "8050" - Nederlandse taal – Lezen
               * "8051" - Nederlandse taal - Taalverzorging
@@ -541,7 +641,22 @@ components:
               * "8065" - Rekenen - Bewerkingen
               * "8080" - Zelfconcept
               * "8081" - Werkhouding
-          enum: ["8050","8051","8052","8053","8054","8055", "8060","8061","8062","8063","8064","8065", "8080","8081"]
+          example: "8050"
+          enum:
+          - "8050"
+          - "8051"
+          - "8052"
+          - "8053"
+          - "8054"
+          - "8055"
+          - "8060"
+          - "8061"
+          - "8062"
+          - "8063"
+          - "8064"
+          - "8065"
+          - "8080"
+          - "8081"
         omschrijving:
           type: string
           example: Nederlandse taal - Lezen
@@ -557,13 +672,13 @@ components:
       properties:
         label:
           type: string
-          example: Subdomein
           description: Het type Toetsonderdeel
-          enum: [Subdomein]
+          example: Subdomein
+          enum:
+          - Subdomein
         id:
           type: string
-          example: "9010"
-          description: >
+          description: |
             Het soort subdomein:
               * "9000" - Taalverzorging - Spelling werkwoorden
               * "9001" - Taalverzorging - Spelling niet-werkwoorden
@@ -572,7 +687,15 @@ components:
               * "9011" - Lezen - Opzoeken
               * "9013" - Lezen - Techniek en woordenschat
               * "9014" - Lezen - Interpreteren, evalueren en samenvatten
-          enum: ["9000","9001","9003", "9010","9011","9013","9014"]
+          example: "9010"
+          enum:
+          - "9000"
+          - "9001"
+          - "9003"
+          - "9010"
+          - "9011"
+          - "9013"
+          - "9014"
         omschrijving:
           type: string
           example: Lezen - Begrijpend lezen
@@ -598,14 +721,18 @@ components:
       properties:
         label:
           type: string
-          example: Aantal opgaven
-          description: >
+          description: |
             Het type Score:
               * Aantal opgaven - Het aantal gemaakte opgaven
               * Aantal goed - Het aantal goed gemaakte opgaven
               * Detailscore - Score van aantal behaalde punten op specifiek toetseenheid (Onderdeel, Domein of Subdomein) van de Eindtoets PO.
               * Eindtoetsscore - Score van het totaal aantal behaalde punten op de Eindtoets PO.
-          enum: [Aantal opgaven,Aantal goed,Detailscore,Eindtoetsscore]
+          example: Aantal opgaven
+          enum:
+          - Aantal opgaven
+          - Aantal goed
+          - Detailscore
+          - Eindtoetsscore
         id:
           type: string
           example: score-abc123
@@ -635,13 +762,12 @@ components:
       properties:
         label:
           type: string
+          description: "Het type Resultaat:\n  * Referentieniveau - Resultaat is het referentieniveau voor Rekenen en Taal (Lezen en Taalverzorging). \n  * Toetsadvies - Resultaat is het Toetsadvies op basis van de Eindtoetsscore.\n  * Percentielscore - Resultaat is de percentielscore van een specifieke toetseenheid.\n"
           example: Toetsadvies
-          description: >
-            Het type Resultaat:
-              * Referentieniveau - Resultaat is het referentieniveau voor Rekenen en Taal (Lezen en Taalverzorging). 
-              * Toetsadvies - Resultaat is het Toetsadvies op basis van de Eindtoetsscore.
-              * Percentielscore - Resultaat is de percentielscore van een specifieke toetseenheid.
-          enum: [Referentieniveau, Toetsadvies, Percentielscore]
+          enum:
+          - Referentieniveau
+          - Toetsadvies
+          - Percentielscore
         toetseenheid:
           type: string
           example: "0011"
@@ -667,12 +793,11 @@ components:
         afnametijdstip:
           type: string
           format: date-time
-          example: 2020-05-08T10:00:00Z
     LeerlingResultatenScores:
       required:
       - afnamecontext
-      - id
       - deelnemerref
+      - id
       - resultaten
       - toetsdefinitie
       - versie
@@ -691,7 +816,6 @@ components:
         datumtijd:
           type: string
           format: date-time
-          example: 2020-05-12T10:00:00Z
         toetsdefinitie:
           type: string
           example: "0011"
@@ -717,19 +841,18 @@ components:
         datumtijd:
           type: string
           format: date-time
-          example: 2020-06-16T14:44:00Z
         auteur:
           type: string
           example: Applicatie xyz
         versie:
           type: string
-          example: Eindtoetsketen_v2020-2021
+          example: Eindtoetsketen_v2021-2022
         profiel:
           type: string
           example: Leerlingeindtoetsresultaat
         schooljaar:
           type: string
-          example: 2020-2021
+          example: 2021-2022
         aanbieder:
           $ref: '#/components/schemas/OnderwijsaanbiederRef'
         locatie:
@@ -746,6 +869,4 @@ components:
       properties:
         melding:
           type: string
-          example: Tekstuele toelichting waarom het verzoek wel of niet geslaagd is.
-            Deze toelichting zou moeten corresponderen met de meldingstekst uit de
-            specs bij de betreffende statuscode.
+          example: Tekstuele toelichting waarom het verzoek wel of niet geslaagd is. Deze toelichting zou moeten corresponderen met de meldingstekst uit de specs bij de betreffende statuscode.
