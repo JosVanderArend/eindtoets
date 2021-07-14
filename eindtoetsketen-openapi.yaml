@@ -6,20 +6,28 @@ info:
   contact:
     name: Jos van der Arend (Kennisnet)
     email: J.vanderArend@kennisnet.nl
-    url: https://raw.githubusercontent.com/JosVanderArend/eindtoets/main/eindtoetsketen-openapi.yaml
+    url: https://github.com/JosVanderArend/eindtoets
   version: "20210714"
 servers:
-- url: https://eindtoets.edustandaard.nl/v2021-2022
+- url: https://eindtoets.edustandaard.nl/v2021-2022/toetsleverancier-endpoint
+  description: Eindtoetsaanbieder endpoint
+- url: https://eindtoets.edustandaard.nl/v2021-2022/las-leverancier-endpoint
+  description: LAS leverancier endpoint
 tags:
 - name: Eindtoetsdeelnemers
   description: Dienst over de uitwisseling van de eindtoetsdeelnemers
 - name: Eindtoetsresultaten
   description: Diensten over de uitwisseling van de eindtoetsresultaten
+- name: Eindtoetsaanbieder
+  description: Diensten die beschikbaar zijn op het endpoint van de Eindtoetsaanbieder
+- name: Lasleverancier
+  description: Diensten die beschikbaar zijn op het endpoint van de Lasleverancier  
 paths:
-  /toetsleverancier-endpoint/eindtoets/registreren:
+  /eindtoets/registreren:
     post:
       tags:
       - Eindtoetsdeelnemers
+      - Eindtoetsaanbieder
       summary: Registreren eindtoetsdeelnemers
       description: Registreren van alle deelnemers aan de eindtoets volgens standlevering van de deelnemerslijst aan de toetsleverancier. Iedere laatste aanlevering van de school is de meest actuele en volledige verzameling van deelnemergegevens. Deze registratie kan nieuw zijn (eerste aanlevering) of een update (alle vervolgleveringen). Het gedeelte '/toetsleverancier-endpoint' uit het pad moet worden vervangen door het endpoint van de betreffende toetsleverancier.
       operationId: registrerenEindtoetsdeelnemers
@@ -158,10 +166,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ontvangstmelding'
       x-codegen-request-body-name: body
-  /las-leverancier-endpoint/eindtoets/leerlingresultaat:
+  /eindtoets/leerlingresultaat:
     post:
       tags:
       - Eindtoetsresultaten
+      - Lasleverancier
       summary: Overdragen leerlingresultaat
       description: Aanlevering van score- en resultaatgegevens van een leerling op de eindtoets volgens standlevering, d.w.z. iedere laatste aanlevering van de leerling is de meest actuele en volledige verzameling leerlingresultaatgegevens, exclusief het leerlingrapport. Deze overdracht kan nieuw zijn (eerste aanlevering) of een update (alle vervolgleveringen). Het gedeelte '/las-leverancier-endpoint' uit het pad moet worden vervangen door het endpoint van de betreffende LAS-leverancier.
       operationId: overdragenLeerlingresultaat
@@ -219,10 +228,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ontvangstmelding'
       x-codegen-request-body-name: body
-  /toetsleverancier-endpoint/eindtoets/leerlingrapport/{rapportid}:
+  /eindtoets/leerlingrapport/{rapportid}:
     get:
       tags:
       - Eindtoetsresultaten
+      - Eindtoetsaanbieder
       summary: Opvragen leerlingrapport
       description: Opvragen van het leerlingrapport van een specifieke leerling als resultaat op de eindtoets. Het gedeelte '/toetsleverancier-endpoint' uit het pad moet worden vervangen door het endpoint van de betreffende toetsleverancier.
       operationId: verkrijgenLeerlingrapport
