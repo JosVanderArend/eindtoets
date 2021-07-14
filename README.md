@@ -1,6 +1,5 @@
-# OAS3-definities bij Afsprakenset "Logistiek proces Eindtoets po"
-OAS3-definities (Defs) in YAML voor de REST API t.b.v. Logisieke proces rondom de Eindtoets PO. 
-Het bestand heet "eindtoetsketen-openapi.yaml".
+# Defs bij Afsprakenset "Logistiek proces Eindtoets po"
+De OAS3-definities (Defs) in YAML-bestand "eindtoetsketen-openapi.yaml" zijn bedoeld voor de REST API t.b.v. Logisieke proces rondom de Eindtoets PO voor schooljaar 2021-2022. 
 
 Iedere publicatie van dit YAML-bestand voor de eindtoetsketen in het schooljaar 2021-2022 is een getagde versie en is beschikbaar onder releases: https://github.com/JosVanderArend/eindtoets/releases. Daar zijn tevens hulpmiddelen beschikbaar om getagde versies te vergelijken. 
 Er kan maximaal worden teruggekeken naar en vergeleken met de definitieve versie van het voorgaande schooljaar 2020-2021 (hoewel deze versie door een aangepaste inrichting enigszins beperkt is).
