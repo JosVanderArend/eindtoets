@@ -6,7 +6,8 @@ info:
   contact:
     name: Jos van der Arend (Kennisnet)
     email: J.vanderArend@kennisnet.nl
-  version: "20210706"
+    url: https://raw.githubusercontent.com/JosVanderArend/eindtoets/main/eindtoetsketen-openapi.yaml
+  version: "20210714"
 servers:
 - url: https://eindtoets.edustandaard.nl/v2021-2022
 tags:
@@ -52,7 +53,7 @@ paths:
             examples:
               example-BRIN6:
                 value:
-                  datumtijd: 2020-06-16T14:44:00Z
+                  datumtijd: 2021-06-16T14:44:00Z
                   auteur: Applicatie xyz
                   versie: Eindtoetsketen_v2021-2022
                   profiel: Eindtoetsdeelnemers
@@ -89,7 +90,7 @@ paths:
                       geslacht: 1
               example-ULOC:
                 value:
-                  datumtijd: 2020-06-16T14:44:00Z
+                  datumtijd: 2021-06-16T14:44:00Z
                   auteur: Applicatie xyz
                   versie: Eindtoetsketen_v2021-2022
                   profiel: Eindtoetsdeelnemers
