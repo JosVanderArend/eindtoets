@@ -10,7 +10,7 @@ sequenceDiagram
     LAS->>Eindtoetsapplicatie: hier is de Deelnemerslijst
     activate Eindtoetsapplicatie
     Note left of Eindtoetsapplicatie: endpoint /registreren (POST)
-    Eindtoetsapplicatie->>LAS: 202 - Bedankt, ik ga dit verwerken!
+    Eindtoetsapplicatie-->>LAS: 202 - Bedankt, ik ga dit verwerken!
     deactivate Eindtoetsapplicatie
 ```
 
@@ -20,7 +20,7 @@ sequenceDiagram
       Eindtoetsapplicatie->>LAS: hier is het Leerlingresultaat
       activate LAS
       Note right of LAS: endpoint /leerlingresultaat (POST)
-      LAS->>Eindtoetsapplicatie: 202 - Bedankt, ik ga dit verwerken!
+      LAS-->>Eindtoetsapplicatie: 202 - Bedankt, ik ga dit verwerken!
       deactivate LAS
     end
 ```
@@ -29,7 +29,7 @@ sequenceDiagram
 sequenceDiagram
     participant Eindtoetsapplicatie
     participant LAS
-    LAS->>Eindtoetsapplicatie: geef mij dit leerligrapport
+    LAS-->>Eindtoetsapplicatie: geef mij dit leerlingrapport
     activate Eindtoetsapplicatie
     Note left of Eindtoetsapplicatie: endpoint /leerlingrapport (GET)
     Eindtoetsapplicatie->>LAS: 200 - Hier heb je m!
