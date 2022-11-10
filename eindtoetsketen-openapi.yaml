@@ -2,12 +2,12 @@
 openapi: 3.0.1
 info:
   title: Eindtoetsketen
-  description: Dit is de definitie van de diensten in de Eindtoetsketen voor schooljaar 2022-2023.
+  description: Dit is de definitie van de diensten in de Eindtoetsketen voor schooljaar 2022-2023. In deze versie is in POST /registreren de melding bij statuscode 405 in eigenschap description gecorrigeerd zoals afgesproken tijdens het ketenoverleg van 10 november 2022.
   contact:
     name: Jos van der Arend (Kennisnet)
     email: J.vanderArend@kennisnet.nl
     url: https://raw.githubusercontent.com/JosVanderArend/eindtoets/main/eindtoetsketen-openapi.yaml
-  version: "20220701"
+  version: "20221110"
 servers:
 - url: https://eindtoets.edustandaard.nl/v2022-2023
 tags:
@@ -109,7 +109,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ontvangstmelding'
         "405":
-          description: School is (nog) niet aangemeld bij de toetsleverancier. Wanneer de school al wel aangemeld is ga dan na of er sprake is van een geregistreerde vestigingscode; de toetsleverancier heeft een door DUO geregistreerde vestigingscode nodig om de aangemelde leerlingen correct te kunnen verwerken.
+          description: School is (nog) niet bekend bij de toetsleverancier.
           content:
             application/json:
               schema:
@@ -875,4 +875,3 @@ components:
         melding:
           type: string
           example: Tekstuele toelichting waarom het verzoek wel of niet geslaagd is. Deze toelichting zou moeten corresponderen met de meldingstekst uit de specs bij de betreffende statuscode.
-          
