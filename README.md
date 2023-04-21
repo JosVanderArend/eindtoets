@@ -1,7 +1,7 @@
 # Defs bij afsprakenset "Logistiek proces Eindtoets po"
 De OAS3-definities (Defs) in YAML-bestand "eindtoetsketen-openapi.yaml" zijn bedoeld voor de REST API t.b.v. Logisieke proces rondom de Eindtoets PO voor schooljaar 2022-2023. 
 
-Deze uitwisseling omvat 3 interacties die schematisch worden gepresenteerd in de drie onderstaande sequencedisgrammen.
+Deze uitwisseling omvat 3 interacties die schematisch worden gepresenteerd in de drie onderstaande sequencediagrammen.
 
 ```mermaid
 sequenceDiagram
